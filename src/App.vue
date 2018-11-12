@@ -2,11 +2,6 @@
   <div id="app"
        class="h-screen flex justify-center">
     <div class="container h-full">
-      <!-- <with-dimension>
-        <gallery slot-scope="{width}"
-                 :gallery-width="width"
-                 :photos="photos" />
-      </with-dimension> -->
       <with-dimension>
         <gallery-slot slot-scope="{width}"
                       :width="width"

@@ -30,8 +30,8 @@ export default {
   },
   computed: {
     columns() {
-      let slices = Math.floor(this.width / this.maxColumnWidth);
-      return slices > 0 ? slices : 1;
+      let columns = Math.floor(this.width / this.maxColumnWidth);
+      return columns > 0 ? columns : 1;
     },
     list() {
       return this.items.reduce((columns, item, index) => {
@@ -41,8 +41,7 @@ export default {
         return columns;
       }, {});
     }
-  },
-  methods: {}
+  }
 };
 </script>
 
