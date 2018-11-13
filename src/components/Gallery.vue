@@ -1,48 +1,57 @@
 <template>
-  <div class="flex -mx-1">
+  <div class="container-flex">
     <div v-for="type in Object.keys(list)"
          :key="type"
          class="flex-1">
-      <img v-for="photo in list[type]"
-           :key="photo.id"
-           class="p-1 w-full"
-           :src="photo.small">
+      <div v-for="(item, index) in list[type]"
+           :key="index">
+        <slot :item="item"></slot>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Gallery",
+  name: "VueColumnsGallery",
 
   props: {
-    photos: {
+    items: {
       required: true
     },
-    galleryWidth: {
-      required: true
+    width: {
+      required: true,
+      type: Number
     },
-    maxPhotoWidth: {
+    maxColumnWidth: {
       default: 200,
       type: Number
     }
   },
   computed: {
-    photosSlices() {
-      let slices = Math.floor(this.galleryWidth / this.maxPhotoWidth);
-      return slices > 0 ? slices : 1;
+    columns() {
+      let columns = Math.floor(this.width / this.maxColumnWidth);
+      return columns > 0 ? columns : 1;
     },
     list() {
-      return this.photos.reduce((columns, photo, index) => {
-        var key = index % this.photosSlices;
+      return this.items.reduce((columns, item, index) => {
+        var key = index % this.columns;
         columns[key] = columns[key] || [];
-        columns[key].push(photo);
+        columns[key].push(item);
         return columns;
       }, {});
     }
-  },
-  methods: {}
+  }
 };
 </script>
+
+<style>
+  .container-flex {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+</style>
+
 
 

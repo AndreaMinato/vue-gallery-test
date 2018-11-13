@@ -1,7 +1,5 @@
 <script>
-import elementResizeDetectorMaker from "element-resize-detector";
-
-const erd = elementResizeDetectorMaker({ strategy: "scroll" });
+import ResizeObserver from "resize-observer-polyfill";
 
 export default {
   data() {
@@ -11,10 +9,16 @@ export default {
     };
   },
   mounted() {
-    erd.listenTo(this.$el, el => {
-      this.width = el.offsetWidth;
-      this.height = el.offsetHeight;
+    var observer = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        const cr = entry.contentRect;
+        this.width = cr.width;
+        this.heigth = cr.height;
+      }
     });
+
+    // Observe one or multiple elements
+    observer.observe(this.$el);
   },
   render() {
     return this.$scopedSlots.default({
