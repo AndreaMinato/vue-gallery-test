@@ -23,18 +23,18 @@ export default {
       required: true,
       type: Number
     },
-    maxColumnWidth: {
+    columnWidth: {
       type: Number,
       default: 0
     },
-    columns: {
+    maxColumns: {
       type: Number,
       default: 0
     }
   },
   computed: {
     columns() {
-      let columns = Math.floor(this.galleryWidth / this.maxColumnWidth);
+      let columns = Math.floor(this.galleryWidth / this.columnWidth);
       return columns > 0 ? columns : 1;
     },
     list() {
