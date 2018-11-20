@@ -19,18 +19,22 @@ export default {
     items: {
       required: true
     },
-    width: {
+    galleryWidth: {
       required: true,
       type: Number
     },
     maxColumnWidth: {
-      default: 200,
-      type: Number
+      type: Number,
+      default: 0
+    },
+    columns: {
+      type: Number,
+      default: 0
     }
   },
   computed: {
     columns() {
-      let columns = Math.floor(this.width / this.maxColumnWidth);
+      let columns = Math.floor(this.galleryWidth / this.maxColumnWidth);
       return columns > 0 ? columns : 1;
     },
     list() {
@@ -50,6 +54,9 @@ export default {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+  }
+  .flex-1 {
+    flex: 1;
   }
 </style>
 
