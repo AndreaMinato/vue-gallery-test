@@ -1,23 +1,17 @@
 <template>
-    <with-dimension>
-        <gallery slot-scope="{width}"
-                 :gallery-width="width"
-                 :items="photos">
-            <img slot-scope="{item}"
-                 :src="item.small" />
-        </gallery>
-    </with-dimension>
+  <gallery :items="photos">
+    <img slot-scope="{item}"
+         :src="item.small" />
+  </gallery>
 </template>
 
 <script>
-import Gallery from "../Gallery";
-import WithDimension from "../WithDimension";
+import Gallery from "../Feed";
 
 export default {
   name: "PhotoGallery",
   components: {
-    Gallery,
-    WithDimension
+    Gallery
   },
   props: ["photos"]
 };

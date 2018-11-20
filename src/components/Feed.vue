@@ -1,9 +1,9 @@
 <template>
   <div class="container-flex">
-    <div v-for="type in Object.keys(list)"
-         :key="type"
+    <div v-for="column in Object.keys(list)"
+         :key="column"
          class="flex-1">
-      <div v-for="(item, index) in list[type]"
+      <div v-for="(item, index) in list[column]"
            :key="index">
         <slot :item="item"></slot>
       </div>
@@ -12,16 +12,14 @@
 </template>
 
 <script>
+import ResizeObserver from "resize-observer-polyfill";
+
 export default {
-  name: "VueColumnsGallery",
+  name: "VueFeed",
 
   props: {
     items: {
       required: true
-    },
-    galleryWidth: {
-      required: true,
-      type: Number
     },
     columnWidth: {
       type: Number,
@@ -32,9 +30,33 @@ export default {
       default: 0
     }
   },
+  mounted() {
+    var observer = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        const cr = entry.contentRect;
+        this.width = cr.width;
+        //   this.heigth = cr.height;
+      }
+    });
+
+    // Observe one or multiple elements
+    observer.observe(this.$el);
+  },
+  data() {
+    return {
+      width: 0
+    };
+  },
   computed: {
     columns() {
-      let columns = Math.floor(this.galleryWidth / this.columnWidth);
+      let columns;
+      columns =
+        this.columnWidth > 0
+          ? Math.floor(this.width / this.columnWidth)
+          : this.maxColumns;
+
+      columns = columns < this.maxColumns ? columns : this.maxColumns;
+
       return columns > 0 ? columns : 1;
     },
     list() {
